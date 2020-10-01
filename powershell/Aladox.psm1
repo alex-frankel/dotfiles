@@ -51,11 +51,13 @@ function Write-Theme {
     # Writes the postfix to the prompt
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentForwardSymbol -ForegroundColor $lastColor
 
-    # $timeStamp = Get-Date -UFormat %R
-    $commandExecutionTime = ((Get-History)[-1].EndExecutionTime - (Get-History)[-1].StartExecutionTime).Milliseconds
-    $commandExecutionTime = "[$commandExecutionTime]"
+    $timeStamp = Get-Date -UFormat %R
+    
+    # todo - this fails on start because there is no history, which I should be able to code against
+    # $commandExecutionTime = ((Get-History)[-1].EndExecutionTime - (Get-History)[-1].StartExecutionTime).Milliseconds
+    # $commandExecutionTime = "[$commandExecutionTime]"
 
-    $prompt += Set-CursorForRightBlockWrite -textLength ($commandExecutionTime.Length + 1)
+    $prompt += Set-CursorForRightBlockWrite -textLength ($timeStamp.Length + 1)
     $prompt += Write-Prompt $commandExecutionTime -ForegroundColor $sl.Colors.PromptForegroundColor
 
     $prompt += Set-Newline
